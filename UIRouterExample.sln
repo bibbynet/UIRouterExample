@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIRouterExample", "UIRouterExample.csproj", "{976794A5-8740-4614-848E-21B0DBE7AB54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIRouterExample", "UIRouterExample.csproj", "{0978F7B7-D8AE-4107-ABEA-ED131CD4E093}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{976794A5-8740-4614-848E-21B0DBE7AB54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{976794A5-8740-4614-848E-21B0DBE7AB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{976794A5-8740-4614-848E-21B0DBE7AB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{976794A5-8740-4614-848E-21B0DBE7AB54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0978F7B7-D8AE-4107-ABEA-ED131CD4E093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0978F7B7-D8AE-4107-ABEA-ED131CD4E093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0978F7B7-D8AE-4107-ABEA-ED131CD4E093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0978F7B7-D8AE-4107-ABEA-ED131CD4E093}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
