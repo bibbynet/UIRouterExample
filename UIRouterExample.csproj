@@ -95,10 +95,10 @@
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\route1.cshtml" />
-    <Content Include="Views\Home\route1list.cshtml" />
-    <Content Include="Views\Home\route2.cshtml" />
-    <Content Include="Views\Home\route2list.cshtml" />
+    <Content Include="Views\Home\_route1.cshtml" />
+    <Content Include="Views\Home\_route1_list.cshtml" />
+    <Content Include="Views\Home\_route2.cshtml" />
+    <Content Include="Views\Home\_route2_list.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

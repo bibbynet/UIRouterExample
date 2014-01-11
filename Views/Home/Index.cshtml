@@ -45,27 +45,27 @@
             $locationProvider.html5Mode(true);
 
             // For any unmatched url, send to /route1
-            $urlRouterProvider.otherwise("/Home/Index/r/route1");
+            $urlRouterProvider.otherwise("/Home/Index/r/_route1");
 
             $stateProvider
                 .state('route1', {
-                    url: "/Home/Index/r/route1",
-                    templateUrl: "/Home/RenderPartial/r/route1"
+                    url: "/Home/Index/r/_route1",
+                    templateUrl: "/Home/RenderPartial/r/_route1"
                 })
                 .state('route1.list', {
-                    url: "/list",
-                    templateUrl: "/Home/RenderPartial/r/route1/list",
+                    url: "/_list",
+                    templateUrl: "/Home/RenderPartial/r/_route1/_list",
                     controller: function ($scope) {
                         $scope.items = ["A", "List", "Of", "Items"];
                     }
                 })
                 .state('route2', {
-                    url: "/Home/Index/r/route2",
-                    templateUrl: "/Home/RenderPartial/r/route2"
+                    url: "/Home/Index/r/_route2",
+                    templateUrl: "/Home/RenderPartial/r/_route2"
                 })
                 .state('route2.list', {
-                    url: "/list",
-                    templateUrl: "/Home/RenderPartial/r/route2/list",
+                    url: "/_list",
+                    templateUrl: "/Home/RenderPartial/r/_route2/_list",
                     controller: function ($scope) {
                         $scope.things = ["A", "Set", "Of", "Things"];
                     }

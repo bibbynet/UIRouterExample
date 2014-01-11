@@ -17,10 +17,9 @@ namespace UIRouterExample.Controllers
 
         public ActionResult RenderPartial()
         {
-            var p1 = Convert.ToString(RouteData.Values["p1"]);
-            var p2 = Convert.ToString(RouteData.Values["p2"]);
+            var param = Convert.ToString(RouteData.Values["pathInfo"]);
 
-            var name = string.Format("{0}{1}", p1, p2);
+            var name = param.Replace(@"/", "");
 
             if (string.IsNullOrEmpty(name))
                 return Content(string.Empty);
