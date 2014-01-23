@@ -17,10 +17,9 @@
             <li ui-sref="category2({pageIndex:7788})">Category 2</li>
         </ul>
         
-        <div class="well" ui-view="cc1"></div>
         <hr />
-        <div class="well" ui-view="cc2"></div>
-        <hr />
+        
+        <div style="display:none">@HttpContext.Current.Session["htmlData"]</div>
         <div class="well" ui-view></div>
         
     </div>
@@ -46,23 +45,6 @@
             $urlRouterProvider.otherwise("/Test/Index/r/c2/0");
 
             $stateProvider
-                //.state('category1', {
-                //    views: {
-                //        "cc1": {
-                //            url: "/Test/Index/r/c1/:pageIndex",
-                //            templateUrl: function(param) {
-                //                console.log($stateParams);
-                //                return '/Test/PageData1/r/' + param.pageIndex;
-                //            }
-                //        },
-                //        "cc2": {
-                //            url: "/Test/Index/r/c2/:pageIndex",
-                //            templateUrl: function(param) {
-                //                return "/Test/PageData2/r/" + param.pageIndex;
-                //            }
-                //        }
-                //    }
-                //})
                 .state('category1', {
                     url: "/Test/Index/r/c1/:pageIndex",
                     templateUrl: function(param) {

@@ -17,17 +17,28 @@ namespace UIRouterExample.Controllers
 
         public ActionResult PageData1()
         {
-            var param = Convert.ToString(RouteData.Values["pathInfo"]);
+            var data = RouteData.Values["pathInfo"];
 
-            string data = string.Format("category1, param:{0} - {1}", param, DateTime.Now);
-            return Content(data);
+            return GetData(data, "category1");
         }
 
         public ActionResult PageData2()
         {
-            var param = Convert.ToString(RouteData.Values["pathInfo"]);
+            var data = RouteData.Values["pathInfo"];
+
+            return GetData(data, "category2");
+        }
+
+        private ActionResult GetData(object p, string name)
+        {
+            var currentIndex = Convert.ToInt16(p.ToString().Split('/')[0]);
+
+            string data = string.Format(@"{2}, param:{0} - {1} <br /> <a ui-sref=""{2}({{pageIndex:{3}}})"">next</a>",
+                currentIndex, DateTime.Now, name, currentIndex+1);
+
             
-            string data = string.Format("category2, param:{0} - {1}", param, DateTime.Now);
+            Session["htmlData"] = data;
+
             return Content(data);
         }
     }
