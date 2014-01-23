@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="myapp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+
+        <ul>
+            <li ui-sref="category1({pageIndex:98})">Category 1</li>
+            <li ui-sref="category2({pageIndex:7788})">Category 2</li>
+        </ul>
+        
+        <div class="well" ui-view="cc1"></div>
+        <hr />
+        <div class="well" ui-view="cc2"></div>
+        <hr />
+        <div class="well" ui-view></div>
+        
+    </div>
+
+    <!-- Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
+    <!-- UI-Router -->
+    <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+
+    <script>
+        var myapp = angular.module('myapp', ["ui.router"]);
+
+        myapp.run(function ($rootScope, $templateCache) {
+            $rootScope.$on('$viewContentLoaded', function () {
+                $templateCache.removeAll();
+            });
+        });
+
+        myapp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+
+            $locationProvider.html5Mode(true);
+
+            $urlRouterProvider.otherwise("/Test/Index/r/c2/0");
+
+            $stateProvider
+                //.state('category1', {
+                //    views: {
+                //        "cc1": {
+                //            url: "/Test/Index/r/c1/:pageIndex",
+                //            templateUrl: function(param) {
+                //                console.log($stateParams);
+                //                return '/Test/PageData1/r/' + param.pageIndex;
+                //            }
+                //        },
+                //        "cc2": {
+                //            url: "/Test/Index/r/c2/:pageIndex",
+                //            templateUrl: function(param) {
+                //                return "/Test/PageData2/r/" + param.pageIndex;
+                //            }
+                //        }
+                //    }
+                //})
+                .state('category1', {
+                    url: "/Test/Index/r/c1/:pageIndex",
+                    templateUrl: function(param) {
+                        //console.log($stateParams);
+                        return '/Test/PageData1/r/' + param.pageIndex;
+                    }
+                })
+                .state('category2', {
+                    url: "/Test/Index/r/c2/:pageIndex",
+                    templateUrl: function(param) {
+                        return "/Test/PageData2/r/" + param.pageIndex;
+                    }
+                })
+            ;
+
+        });
+    </script>
+
+</body>
+</html>
