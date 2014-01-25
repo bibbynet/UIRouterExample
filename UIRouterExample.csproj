@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MultiViewsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -101,6 +102,7 @@
     <Content Include="Views\Home\_route2.cshtml" />
     <Content Include="Views\Home\_route2_list.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\MultiViews\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
