@@ -46,14 +46,15 @@
 
             $stateProvider
                 .state('category1', {
-                    url: "/Test/Index/r/c1/:pageIndex",
+                    url: "/Test/Index/r/c1/{pageIndex}",
                     templateUrl: function(param) {
                         //console.log($stateParams);
                         return '/Test/PageData1/r/' + param.pageIndex;
-                    }
+                    },
+
                 })
                 .state('category2', {
-                    url: "/Test/Index/r/c2/:pageIndex",
+                    url: "/Test/Index/r/c1/{pageIndex}",
                     templateUrl: function(param) {
                         return "/Test/PageData2/r/" + param.pageIndex;
                     }
