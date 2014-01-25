@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -12,12 +11,12 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="container">
+<body class="container" ng-controller="mainCtrl">
     <p><i>Best viewed in pop-out mode to see location changes. Click blue button on the right.</i></p>
 
     <div class="navbar">
         <div class="navbar-inner">
-            <a class="brand" href="#">Quick Start</a>
+            <a class="brand" href="#">Quick Start  ({{vm.counter}})</a>
             <ul class="nav">
                 <li><a ui-sref="route1">Route 1</a></li>
                 <li><a ui-sref="route2">Route 2</a></li>
@@ -40,8 +39,33 @@
     <!-- App Script -->
     <script>
         var myapp = angular.module('myapp', ["ui.router"]);
-        myapp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        
+        //var rootObj = {
+        //    counter: 0
+        //};
+        myapp.factory("f", function () {
+            return {
+                counter: 0
+            };
+        });
 
+        myapp.controller("mainCtrl", function ($scope, f) {
+            $scope.vm = f;
+        }).controller("routeCtrl1", function ($scope,f) {
+            f.counter++;
+            $scope.vm = f;
+            $scope.items = ["A", "List", "Of", "Items"];
+        }).controller("routeCtrl2", function ($scope,f) {
+            f.counter++;
+            $scope.vm = f;
+            $scope.things = ["CCC", "33", "444", "Thing"];
+        });
+
+
+        myapp.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+
+            delete $httpProvider.defaults.headers.common["X-Requested-With"];
+            $httpProvider.defaults.useXDomain = true;
             $locationProvider.html5Mode(true);
 
             // For any unmatched url, send to /route1
@@ -55,9 +79,7 @@
                 .state('route1.list', {
                     url: "/_list",
                     templateUrl: "/Home/RenderPartial/r/_route1/_list",
-                    controller: function ($scope) {
-                        $scope.items = ["A", "List", "Of", "Items"];
-                    }
+                    controller: "routeCtrl1"
                 })
                 .state('route2', {
                     url: "/Home/Index/r/_route2",
@@ -66,10 +88,13 @@
                 .state('route2.list', {
                     url: "/_list",
                     templateUrl: "/Home/RenderPartial/r/_route2/_list",
-                    controller: function ($scope) {
-                        $scope.things = ["A", "Set", "Of", "Things"];
-                    }
+                    controller: "routeCtrl2"
                 });
+
+
+
+
+
         });
     </script>
 
