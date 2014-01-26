@@ -1,0 +1,115 @@
+﻿@model dynamic
+@{
+    object obj = Model;
+    var objStr = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+}
+
+<!DOCTYPE html>
+
+<html ng-app="myapp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        @*{tab1:{pageIndex:0,counter:0},tab2:{pageIndex:0,counter:0}}*@
+        <ul ng-init="vm=@objStr">
+            @*<li ui-sref="tab1({pageIndex:2})">tab 1 ({{vm.tab1.counter}})</li>
+                <li ui-sref="tab2({pageIndex:3})">tab 2 ({{vm.tab2.counter}})</li>*@
+            <li><a href="/Pagination/Index/r/tab1/0" ng-click="vm.click()">tab 1 ({{vm.tab1.counter}})</a></li>
+            <li><a href="/Pagination/Index/r/tab2/0" ng-click="vm.click()">tab 2 ({{vm.tab2.counter}})</a></li>
+        </ul>
+
+        <hr />
+
+        <div style="display:none">@HttpContext.Current.Session["htmlData"]</div>
+
+        <div class="well" ui-view="main"></div>
+
+    </div>
+
+    <!-- Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
+    <!-- UI-Router -->
+    <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+
+    <script>
+        var myapp = angular.module('myapp', ["ui.router"]);
+
+        //myapp.run(function ($rootScope, $templateCache) {
+        //    $rootScope.$on('$viewContentLoaded', function () {
+        //        $templateCache.removeAll();
+        //    });
+        //});
+
+        myapp.service("f", function () {
+
+            return {
+                //tab1: {
+                //    pageIndex: 0,
+                //    counter: 0
+                //},
+                //tab2: {
+                //    pageIndex: 0,
+                //    counter: 0
+                //}
+            };
+
+        });
+
+        myapp
+            .controller("mainCtrl", function ($scope, $templateCache, $state, f) {
+                //$scope.vm = f;
+                f = $scope.vm;
+
+
+                vm.click = function (tabName) {
+                    $state.go(tabName, { pageIndex: f[tabName].pageIndex });
+                };
+            })
+            .controller("tabPagination", function ($scope, f) {
+
+
+            });
+
+        myapp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+
+            $locationProvider.html5Mode(true);
+
+            $urlRouterProvider.otherwise("/Pagination/Index/r/tab1/0");
+
+            $stateProvider
+                .state('tab1', {
+                    url: "/Pagination/Index/r/tab1/{pageIndex}",
+                    views: {
+                        "main": {
+                            controller: "tabPagination",
+                            templateUrl: function (params) {
+                                //console.log($stateParams);
+                                return '/Pagination/PageData1/r/' + params.pageIndex;
+                            }
+                        }
+                    }
+
+                })
+                .state('tab2', {
+                    url: "/Pagination/Index/r/tab2/{pageIndex}",
+                    views: {
+                        "main": {
+                            controller: "tabPagination",
+                            templateUrl: function (params) {
+                                //console.log($stateParams);
+                                return '/Pagination/PageData2/r/' + params.pageIndex;
+                            }
+                        }
+                    }
+
+                });
+
+        });
+    </script>
+
+</body>
+
+</html>
