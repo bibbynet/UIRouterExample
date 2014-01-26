@@ -7,15 +7,13 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="container">
+<body class="container" ng-controller="mainCtrl">
 
     <div class="navbar">
         <div class="navbar-inner">
-            <a class="brand" ui-sref="index">Quick Start</a>
+            <a class="brand">Quick Start</a>
             <ul class="nav">
-                <li><a ui-sref="index">Home</a></li>
-                <li><a ui-sref="route1">Route 1</a></li>
-                <li><a ui-sref="route2">Route 2</a></li>
+                <li><a ui-sref="viewA">Home (a1:{{vm.a1}}, b1:{{vm.b1}})</a></li>
             </ul>
         </div>
     </div>
@@ -40,48 +38,65 @@
         myapp.factory('f', function () {
             return {
                 a1: 0,
-                a2: 0,
+                b1: 0,
             };
         });
-        myapp.controller("ctrl1", function ($scope) {
+        myapp
+            .controller("mainCtrl", function ($scope, $state, f) {
+                $scope.vm = f;
+            })
+            .controller("viewACtrl", function ($scope, f) {
+                $scope.vm = {
+                    counter: f.a1
+                };
 
-        });
-        myapp.config(function ($stateProvider) {
+                $scope.vm.click = function () {
+
+                    f.a1++;
+                    
+                };
+            })
+            .controller("viewBCtrl", function ($scope, $state, $stateParams, f) {
+                $scope.vm = {
+                    counter: f.b1,
+                    hrefStr: $state.href("viewA", { pageIndex: 1234 }), //$state.get()// //$state.current
+                    other: $stateParams
+                };
+                
+                $scope.vm.click = function () {
+
+                    f.b1++;
+                    $state.go("viewB", { pageIndex: f.b1 });
+
+                };
+            })
+        ;
+        myapp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+
+
+            $locationProvider.html5Mode(true);
+            $urlRouterProvider.otherwise("/a/123");
+            
             $stateProvider
-                .state('index', {
-                    url: "",
+                .state('viewA', {
+                    url: "/a/{pageIndex}",
                     views: {
                         "viewA": {
-                            template: "index.viewA"
-                        },
-                        "viewB": {
-                            template: "index.viewB"
+                            template: 'index.viewA <a ui-sref="viewB" ng-click="vm.click()">click</a>',
+                            controller: "viewACtrl"
                         }
                     }
                 })
-                .state('route1', {
-                    url: "/route1",
+                .state('viewB', {
+                    url: "/b/{pageIndex}",
                     views: {
-                        "viewA": {
-                            template: "route1.viewA"
-                        },
                         "viewB": {
-                            template: "route1.viewB"
+                            template: 'index.viewB <a href="javascript:;" ng-click="vm.click()">click</a> <hr /> $state.current : {{vm.hrefStr}} <hr /> $stateParams : {{vm.other}}',
+                            controller: "viewBCtrl"
                         }
                     }
-                })
-                .state('route2', {
-                    url: "/route2",
-                    views: {
-                        "viewA": {
-                            template: "route2.viewA"
-                        },
-                        "viewB": {
-                            template: "route2.viewB"
-                        }
-                    }
-                })
-        })
+                });
+        });
     </script>
 
 </body>
