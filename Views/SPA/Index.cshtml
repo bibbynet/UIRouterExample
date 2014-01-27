@@ -1,0 +1,113 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body ng-app="myapp">
+
+
+
+    <div ui-view="header"></div>
+    <div class="container" style="margin-top:60px" ui-view="container"></div>
+    <div ui-view="footer"></div>
+
+
+
+
+    <!-- Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
+    <!-- UI-Router -->
+    <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+
+    <script>
+
+        //http://plnkr.co/edit/oTjf0PIpxZE272TTLMhZ?p=preview
+
+        angular.module('contact', ['ui.router'])
+            .config([
+                '$stateProvider', function($stateProvider) {
+                    $stateProvider.state('contact', {
+                        url: '/contact',
+                        templateUrl: 'contact.html',
+                        controller: 'ContactController'
+                    });
+                }
+            ])
+            .controller('ContactController', [
+                '$scope', function($scope) {
+                    $scope.title = 'Contact Module';
+                }
+            ]);
+
+
+        var app = angular.module('myapp', ['contact', 'ui.router']);
+
+
+        app.config(['$stateProvider', function ($stateProvider) {
+            $stateProvider
+                .state('root', {
+                    url: '',
+                    abstract: true,
+                    views: {
+                        'header': {
+                            templateUrl: '/SPA/_Header',
+                            controller: 'HeaderCtrl'
+                        },
+                        'footer': {
+                            template: '==footer=='
+                        }
+                    }
+                })
+                .state('root.home', {
+                    url: '/',
+                    views: {
+                        'container@@': {
+                            template: 'home page'
+                        }
+                    }
+                })
+                .state('root.about', {
+                    url: '/about',
+                    views: {
+                        'container@@': {
+                            template: 'Feature: About<div ui-view></div>'
+                        }
+                    }
+                })
+                .state('root.contacts', {
+                    url: '/contacts',
+                    views: {
+                        'container@@': {
+                            template: 'contacts page'
+                        }
+                    }
+                });
+
+        }]);
+
+        app.controller('HeaderCtrl', ['$scope', function ($scope) {
+            $scope.links = [
+                { name: 'home', url: '/' },
+                { name: 'about', url: '/about' },
+                { name: 'contacts', url: '/contacts' }
+            ];
+        }]);
+
+        app.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+            $state.transitionTo('root.home');
+        }]);
+
+
+    </script>
+
+</body>
+</html>

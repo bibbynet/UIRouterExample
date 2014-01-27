@@ -91,6 +91,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MultiViewsController.cs" />
     <Compile Include="Controllers\PaginationController.cs" />
+    <Compile Include="Controllers\SPAController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -106,6 +107,8 @@
     <Content Include="Views\Home\_route2_list.cshtml" />
     <Content Include="Views\Pagination\Index.cshtml" />
     <Content Include="Views\MultiViews\Index.cshtml" />
+    <Content Include="Views\SPA\Index.cshtml" />
+    <Content Include="Views\SPA\_Header.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
