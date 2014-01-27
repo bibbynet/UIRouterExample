@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -28,11 +27,12 @@
 
     <script>
 
+        //http://stackoverflow.com/questions/16473952/angularjs-ui-router-how-to-build-master-state-which-is-global-across-app
         //http://plnkr.co/edit/oTjf0PIpxZE272TTLMhZ?p=preview
 
         angular.module('contact', ['ui.router'])
             .config([
-                '$stateProvider', function($stateProvider) {
+                '$stateProvider', function ($stateProvider) {
                     $stateProvider.state('contact', {
                         url: '/contact',
                         templateUrl: 'contact.html',
@@ -40,10 +40,9 @@
                     });
                 }
             ])
-            .controller('ContactController', [
-                '$scope', function($scope) {
-                    $scope.title = 'Contact Module';
-                }
+            .controller('ContactController', ['$scope', function ($scope) {
+                $scope.title = 'Contact Module';
+            }
             ]);
 
 
