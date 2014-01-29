@@ -18,15 +18,15 @@
             @*<li ui-sref="tab1({pageIndex:2})">tab 1 ({{vm.tab1.counter}})</li>
                 <li ui-sref="tab2({pageIndex:3})">tab 2 ({{vm.tab2.counter}})</li>*@
             <li><a href="/Pagination/Index/r/tab1/0" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
-            <li><a href="/Pagination/Index/r/tab2/0" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
+            <li><a href="@Url.ClientRouteUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
         </ul>
 
         <hr />
-
+        @Url.ClientRouteUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})
         <div style="display:none">@HttpContext.Current.Session["htmlData"]</div>
 
         <div class="well" ui-view="main"></div>
-
+        
     </div>
 
     <!-- Angular -->
@@ -72,7 +72,7 @@
                 };
 
             })
-            .controller("tabPagination", function ($scope, $stateParams, $timeout, f) {
+            .controller("tabPaginationCtrl", function ($scope, $stateParams, $timeout, f) {
 
                 var pageIndex = $stateParams.pageIndex;
                 var tabName = $stateParams.tabName;
@@ -85,17 +85,19 @@
 
             $locationProvider.html5Mode(true);
 
-            $urlRouterProvider.otherwise("/Pagination/Index/r/tab1/0");
+            $urlRouterProvider.otherwise("/pagination/index/r/tabname/tab1/pageindex/0");
 
             $stateProvider
                 .state('tab', {
-                    url: "/Pagination/Index/r/{tabName}/{pageIndex}",
+                    url: "/pagination/index/r/tabname/{tabName}/pageindex/{pageIndex}",
                     views: {
                         "main": {
-                            controller: "tabPagination",
+                            controller: "tabPaginationCtrl",
                             templateUrl: function (params) {
 
-                                return '/Pagination/' + params.tabName + '/r/' + params.pageIndex;
+                                window.pp = params;
+                                console.log(params);
+                                return '/pagination/' + params.tabName + '/r/tabname/' + params.tabName + '/pageindex/' + params.pageIndex;
 
                             }
                         }

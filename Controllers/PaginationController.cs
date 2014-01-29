@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -36,22 +37,31 @@ namespace UIRouterExample.Controllers
         {
             var data = RouteData.Values["pathInfo"];
 
-            return GetData(data, "tab1");
+            return GetData(data);
         }
 
         public ActionResult tab2()
         {
             var data = RouteData.Values["pathInfo"];
 
-            return GetData(data, "tab2");
+            return GetData(data);
         }
 
-        private ActionResult GetData(object p, string name)
+        private ActionResult GetData(object p)
         {
-            var currentIndex = Convert.ToInt16(p.ToString().Split('/')[0]);
+            var d = Helper.GetObject(p.ToString());
+            //IDictionary<string, object> d = dObj;
 
-            string data = string.Format(@"{2}, param:{0} - {1} <br /> <a href=""/Pagination/Index/r/{2}/{3}"">next (pageIndex + 1 = {3})</a>",
-                currentIndex, DateTime.Now, name, currentIndex + 1);
+            int currentIndex = Convert.ToInt32(d["pageindex"]);
+            string tabName = d["tabname"];
+
+            d["pageindex"] = (++currentIndex).ToString();
+            var pagerUrl = Url.ClientRouteUrl("Index", "Pagination", (object)d);
+
+
+            string data =
+                string.Format(@"tabName:{0}, pageIndex:{1} <br /> <a href=""{2}"">next (pageIndex + 1 = {3})</a>",
+                    tabName, currentIndex, pagerUrl, currentIndex);
 
 
             Session["htmlData"] = data;
