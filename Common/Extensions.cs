@@ -9,9 +9,18 @@ using Newtonsoft.Json;
 
 namespace System.Web.Mvc
 {
+    //public class CaseInsensitive : ConventionInjection
+    //{
+    //    protected override bool Match(ConventionInfo c)
+    //    {
+    //        return c.SourceProp.Name.ToLower() == c.TargetProp.Name.ToLower();
+    //    }
+    //}
+
+
     public class Helper
     {
-        public static IDictionary<string,string> GetObject(string url)
+        public static T GetObject<T>(string url) where T : new()
         {
             string separator = "/";
 
@@ -20,21 +29,23 @@ namespace System.Web.Mvc
                 throw new Exception("please prepare the string to match pair namne value string");
 
             string tempName = "";
-            var dic = new Dictionary<string, string>();
+            var dObj = new Dictionary<string, object>();
             for (var i = 0; i < arr.Length; i++)
             {
                 var item = arr[i];
                 if (i % 2 == 0)
                 {
-                    dic.Add(item, null);
+                    dObj.Add(item, null);
                     tempName = item;
                 }
                 if (i % 2 == 1)
                 {
-                    dic[tempName] = item;
+                    dObj[tempName] = item;
                 }
             }
-            return dic;
+
+            string jsonStr = JsonConvert.SerializeObject(dObj);
+            return JsonConvert.DeserializeObject<T>(jsonStr);
         }
     }
 
@@ -60,6 +71,6 @@ namespace System.Web.Mvc
 
             return string.Format("/{0}/{1}/r/{2}", controllerName, actionName, objUrl).ToLower();
         }
-        
+
     }
 }

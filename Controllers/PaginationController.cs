@@ -35,38 +35,37 @@ namespace UIRouterExample.Controllers
 
         public ActionResult tab1()
         {
-            var data = RouteData.Values["pathInfo"];
+            var data = RouteData.Values["pathInfo"].ToString();
 
             return GetData(data);
         }
 
         public ActionResult tab2()
         {
-            var data = RouteData.Values["pathInfo"];
+            var data = RouteData.Values["pathInfo"].ToString();
 
             return GetData(data);
         }
 
-        private ActionResult GetData(object p)
+        private ActionResult GetData(string str)
         {
-            var d = Helper.GetObject(p.ToString());
-            //IDictionary<string, object> d = dObj;
-
-            int currentIndex = Convert.ToInt32(d["pageindex"]);
-            string tabName = d["tabname"];
-
-            d["pageindex"] = (++currentIndex).ToString();
-            var pagerUrl = Url.ClientRouteUrl("Index", "Pagination", (object)d);
-
+            var model = Helper.GetObject<ViewModel>(str);
+            model.PageIndex++;
+            var pagerUrl = Url.ClientRouteUrl("Index", "Pagination", model);
 
             string data =
                 string.Format(@"tabName:{0}, pageIndex:{1} <br /> <a href=""{2}"">next (pageIndex + 1 = {3})</a>",
-                    tabName, currentIndex, pagerUrl, currentIndex);
-
-
+                    model.TabName, model.PageIndex, pagerUrl, model.PageIndex++);
+            
             Session["htmlData"] = data;
-
             return Content(data);
+        }
+
+
+        public class ViewModel
+        {
+            public string TabName { get; set; }
+            public int PageIndex { get; set; }
         }
     }
 }

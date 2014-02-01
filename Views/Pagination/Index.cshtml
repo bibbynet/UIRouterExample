@@ -17,16 +17,16 @@
         <ul ng-init="vm=@objStr">
             @*<li ui-sref="tab1({pageIndex:2})">tab 1 ({{vm.tab1.counter}})</li>
                 <li ui-sref="tab2({pageIndex:3})">tab 2 ({{vm.tab2.counter}})</li>*@
-            <li><a href="/Pagination/Index/r/tab1/0" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
+            <li><a href="@Url.ClientRouteUrl("Index","Pagination",new {tabName="tab1",pageIndex=0})" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
             <li><a href="@Url.ClientRouteUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
         </ul>
 
         <hr />
-        @Url.ClientRouteUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})
+        @Url.ClientRouteUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
         <div style="display:none">@HttpContext.Current.Session["htmlData"]</div>
 
         <div class="well" ui-view="main"></div>
-        
+
     </div>
 
     <!-- Angular -->
@@ -95,8 +95,6 @@
                             controller: "tabPaginationCtrl",
                             templateUrl: function (params) {
 
-                                window.pp = params;
-                                console.log(params);
                                 return '/pagination/' + params.tabName + '/r/tabname/' + params.tabName + '/pageindex/' + params.pageIndex;
 
                             }
