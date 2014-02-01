@@ -9,15 +9,6 @@ using Newtonsoft.Json;
 
 namespace System.Web.Mvc
 {
-    //public class CaseInsensitive : ConventionInjection
-    //{
-    //    protected override bool Match(ConventionInfo c)
-    //    {
-    //        return c.SourceProp.Name.ToLower() == c.TargetProp.Name.ToLower();
-    //    }
-    //}
-
-
     public class Helper
     {
         public static T GetObject<T>(string url) where T : new()
