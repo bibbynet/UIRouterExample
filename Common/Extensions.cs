@@ -69,13 +69,12 @@ namespace System.Web.Mvc
             var tStr2 = JsonConvert.SerializeObject(tObj);
             try
             {
-                JsonConvert.DeserializeObject<T>(tStr2);
+                return JsonConvert.DeserializeObject<T>(tStr2);
             }
             catch (Exception ex)
             {
                 throw new Exception("convert data to type is fail", ex);
             }
-            return JsonConvert.DeserializeObject<T>(tStr2);
         }
 
 
