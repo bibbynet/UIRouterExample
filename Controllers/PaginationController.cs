@@ -49,10 +49,16 @@ namespace UIRouterExample.Controllers
 
         private ActionResult GetData(string str)
         {
-            var model = Helper.GetObject<ViewModel>(str);
+            // ==seq==
+            var model = Helper.GetObjectBySeqUrl<ViewModel>(str);
             model.PageIndex++;
-            var pagerUrl = Url.ClientRouteUrl("Index", "Pagination", model);
-
+            var pagerUrl = Url.ClientRouteSeqUrl("Index", "Pagination", model);
+            
+            // ==pair==
+            //var model = Helper.GetObjectByPairUrl<ViewModel>(str);
+            //model.PageIndex++;
+            //var pagerUrl = Url.ClientRoutePairUrl("Index", "Pagination", model);
+            
             string data =
                 string.Format(@"tabName:{0}, pageIndex:{1} <br /> <a href=""{2}"">next (pageIndex + 1 = {3})</a>",
                     model.TabName, model.PageIndex, pagerUrl, model.PageIndex++);

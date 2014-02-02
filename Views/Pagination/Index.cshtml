@@ -15,14 +15,23 @@
     <div ng-controller="mainCtrl">
         @*{tab1:{pageIndex:0,counter:0},tab2:{pageIndex:0,counter:0}}*@
         <ul ng-init="vm=@objStr">
-            @*<li ui-sref="tab1({pageIndex:2})">tab 1 ({{vm.tab1.counter}})</li>
-                <li ui-sref="tab2({pageIndex:3})">tab 2 ({{vm.tab2.counter}})</li>*@
-            <li><a href="@Url.ClientRouteUrl("Index","Pagination",new {tabName="tab1",pageIndex=0})" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
-            <li><a href="@Url.ClientRouteUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
+
+            <li><a href="@Url.ClientRouteSeqUrl("Index","Pagination",new {tabName="tab1",pageIndex=0})" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
+            <li><a href="@Url.ClientRouteSeqUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
+
+            @* ==pair==
+            <li><a href="@Url.ClientRoutePairUrl("Index","Pagination",new {tabName="tab1",pageIndex=0})" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
+            <li><a href="@Url.ClientRoutePairUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
+            *@
         </ul>
 
         <hr />
-        @Url.ClientRouteUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
+        @Url.ClientRouteSeqUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
+        <br />
+        @Url.ClientRoutePairUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
+        
+        <hr />
+
         <div style="display:none">@HttpContext.Current.Session["htmlData"]</div>
 
         <div class="well" ui-view="main"></div>
@@ -85,23 +94,46 @@
 
             $locationProvider.html5Mode(true);
 
-            $urlRouterProvider.otherwise("/pagination/index/r/tabname/tab1/pageindex/0");
+            //seq
+            $urlRouterProvider.otherwise("/pagination/index/r/tab1/0");
 
             $stateProvider
                 .state('tab', {
-                    url: "/pagination/index/r/tabname/{tabName}/pageindex/{pageIndex}",
+                    url: "/pagination/index/r/{tabName}/{pageIndex}",
                     views: {
                         "main": {
                             controller: "tabPaginationCtrl",
                             templateUrl: function (params) {
 
-                                return '/pagination/' + params.tabName + '/r/tabname/' + params.tabName + '/pageindex/' + params.pageIndex;
+                                console.log(params);
+                                return '/pagination/' + params.tabName + '/r/' + params.tabName + '/' + params.pageIndex;
 
                             }
                         }
                     }
 
                 });
+
+
+            //pair
+            //$urlRouterProvider.otherwise("/pagination/index/r/tabname/tab1/pageindex/0");
+
+            //$stateProvider
+            //    .state('tab', {
+            //        url: "/pagination/index/r/tabname/{tabName}/pageindex/{pageIndex}",
+            //        views: {
+            //            "main": {
+            //                controller: "tabPaginationCtrl",
+            //                templateUrl: function (params) {
+
+            //                    console.log(params);
+            //                    return '/pagination/' + params.tabName + '/r/tabname/' + params.tabName + '/pageindex/' + params.pageIndex;
+
+            //                }
+            //            }
+            //        }
+
+            //    });
 
         });
     </script>
