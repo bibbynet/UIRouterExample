@@ -12,11 +12,12 @@ namespace System.Web.Mvc
 {
     public class Helper
     {
-        public static T GetObjectByPairUrl<T>(string url) where T : new()
+        public static T GetObjectByPairPathInfo<T>(object pathInfo) where T : new()
         {
             string separator = "/";
 
-            var arr = url.Split(separator.ToCharArray());
+            string info = pathInfo.ToString();
+            var arr = info.Split(separator.ToCharArray());
             if (arr.Length % 2 != 0)
                 throw new Exception("please prepare the string to match pair namne value string");
 
@@ -40,11 +41,12 @@ namespace System.Web.Mvc
             return JsonConvert.DeserializeObject<T>(jsonStr);
         }
 
-        public static T GetObjectBySeqUrl<T>(string url) where T : new()
+        public static T GetObjectBySeqPathInfo<T>(object pathInfo) where T : new()
         {
             string separator = "/";
 
-            var arr = url.Split(separator.ToCharArray());
+            string info = pathInfo.ToString();
+            var arr = info.Split(separator.ToCharArray());
 
             var tStr = JsonConvert.SerializeObject(new T());
             var tObj = (JsonConvert.DeserializeObject(tStr) as JObject);
@@ -83,9 +85,9 @@ namespace System.Web.Mvc
 
     public static class Extensions
     {
-        public static string ClientRoutePairUrl(this UrlHelper urlHelper, string actionName, string controllerName, object obj)
+        public static string UiRoutePairUrl(this UrlHelper urlHelper, string actionName, string controllerName, object obj)
         {
-            //var serverUrl = urlHelper.Action(actionName, controllerName); 
+            var serverUrl = urlHelper.Action(actionName, controllerName);
 
             var jsonStr = JsonConvert.SerializeObject(obj);
             var dic = JsonConvert.DeserializeObject<IDictionary<string, string>>(jsonStr);
@@ -100,11 +102,13 @@ namespace System.Web.Mvc
 
             var objUrl = string.Join("/", list.ToArray());
 
-            return string.Format("/{0}/{1}/r/{2}", controllerName, actionName, objUrl).ToLower();
+            return string.Format("{0}/r/{1}", serverUrl, objUrl).ToLower();
         }
 
-        public static string ClientRouteSeqUrl(this UrlHelper urlHelper, string actionName, string controllerName, object obj)
+        public static string UiRouteSeqUrl(this UrlHelper urlHelper, string actionName, string controllerName, object obj)
         {
+            var serverUrl = urlHelper.Action(actionName, controllerName);
+
             var jsonStr = JsonConvert.SerializeObject(obj);
             var dic = JsonConvert.DeserializeObject<IDictionary<string, string>>(jsonStr);
 
@@ -117,7 +121,7 @@ namespace System.Web.Mvc
 
             var objUrl = string.Join("/", list.ToArray());
 
-            return string.Format("/{0}/{1}/r/{2}", controllerName, actionName, objUrl).ToLower();
+            return string.Format("{0}/r/{1}", serverUrl, objUrl).ToLower();
         }
 
     }

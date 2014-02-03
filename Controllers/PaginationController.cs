@@ -35,24 +35,24 @@ namespace UIRouterExample.Controllers
 
         public ActionResult tab1()
         {
-            var data = RouteData.Values["pathInfo"].ToString();
+            var data = RouteData.Values["pathInfo"];
 
             return GetData(data);
         }
 
         public ActionResult tab2()
         {
-            var data = RouteData.Values["pathInfo"].ToString();
+            var data = RouteData.Values["pathInfo"];
 
             return GetData(data);
         }
 
-        private ActionResult GetData(string str)
+        private ActionResult GetData(object pathInfo)
         {
             // ==seq==
-            var model = Helper.GetObjectBySeqUrl<ViewModel>(str);
+            var model = Helper.GetObjectBySeqPathInfo<ViewModel>(pathInfo);
             model.PageIndex++;
-            var pagerUrl = Url.ClientRouteSeqUrl("Index", "Pagination", model);
+            var pagerUrl = Url.UiRouteSeqUrl("Index", "Pagination", model);
             
             // ==pair==
             //var model = Helper.GetObjectByPairUrl<ViewModel>(str);

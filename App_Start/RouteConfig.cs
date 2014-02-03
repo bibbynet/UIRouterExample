@@ -21,12 +21,16 @@ namespace UIRouterExample
 
             routes.MapRoute(
                 name: "ui-route",
-                url: "{controller}/{action}/r/{*pathInfo}",
+                url: "{controller}/r/{*pathInfo}",
                 defaults: new
                 {
-                    controller = "Home",
                     action = "Index"
                 }
+            );
+
+            routes.MapRoute(
+                name: "ui-route1",
+                url: "{controller}/{action}/r/{*pathInfo}"
             );
         }
     }

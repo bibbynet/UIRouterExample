@@ -16,8 +16,8 @@
         @*{tab1:{pageIndex:0,counter:0},tab2:{pageIndex:0,counter:0}}*@
         <ul ng-init="vm=@objStr">
 
-            <li><a href="@Url.ClientRouteSeqUrl("Index","Pagination",new {tabName="tab1",pageIndex=0})" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
-            <li><a href="@Url.ClientRouteSeqUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
+            <li><a href="@Url.UiRouteSeqUrl("Index","Pagination",new {tabName="tab1",pageIndex=0})" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
+            <li><a href="@Url.UiRouteSeqUrl("Index","Pagination",new {tabName="tab2",pageIndex=0})" ng-click="vp.click($event,'tab2')">tab 2 ({{vm.tab2.counter}})</a></li>
 
             @* ==pair==
             <li><a href="@Url.ClientRoutePairUrl("Index","Pagination",new {tabName="tab1",pageIndex=0})" ng-click="vp.click($event,'tab1')">tab 1 ({{vm.tab1.counter}})</a></li>
@@ -26,13 +26,13 @@
         </ul>
 
         <hr />
-        @Url.ClientRouteSeqUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
+        @Url.UiRouteSeqUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
         <br />
-        @Url.ClientRoutePairUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
+        @Url.UiRoutePairUrl("Index", "Pagination", new { tabName = "tab2", pageIndex = 0 })
         
         <hr />
 
-        <div style="display:none">@HttpContext.Current.Session["htmlData"]</div>
+        <div style="display:none">@Html.Raw(HttpContext.Current.Session["htmlData"])</div>
 
         <div class="well" ui-view="main"></div>
 
@@ -95,11 +95,11 @@
             $locationProvider.html5Mode(true);
 
             //seq
-            $urlRouterProvider.otherwise("/pagination/index/r/tab1/0");
+            $urlRouterProvider.otherwise("/pagination/r/tab1/0");
 
             $stateProvider
                 .state('tab', {
-                    url: "/pagination/index/r/{tabName}/{pageIndex}",
+                    url: "/pagination/r/{tabName}/{pageIndex}",
                     views: {
                         "main": {
                             controller: "tabPaginationCtrl",
