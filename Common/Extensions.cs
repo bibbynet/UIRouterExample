@@ -87,7 +87,7 @@ namespace System.Web.Mvc
     {
         public static string UiRoutePairUrl(this UrlHelper urlHelper, string actionName, string controllerName, object obj)
         {
-            var serverUrl = urlHelper.Action(actionName, controllerName);
+            //var serverUrl = urlHelper.Action(actionName, controllerName);
 
             var jsonStr = JsonConvert.SerializeObject(obj);
             var dic = JsonConvert.DeserializeObject<IDictionary<string, string>>(jsonStr);
@@ -102,12 +102,13 @@ namespace System.Web.Mvc
 
             var objUrl = string.Join("/", list.ToArray());
 
-            return string.Format("{0}/r/{1}", serverUrl, objUrl).ToLower();
+            return string.Format("/{0}/{1}/r/{2}", controllerName, actionName, objUrl).ToLower();
+            //return string.Format("{0}/r/{1}", serverUrl, objUrl).ToLower();
         }
 
         public static string UiRouteSeqUrl(this UrlHelper urlHelper, string actionName, string controllerName, object obj)
         {
-            var serverUrl = urlHelper.Action(actionName, controllerName);
+            //var serverUrl = urlHelper.Action(actionName, controllerName);
 
             var jsonStr = JsonConvert.SerializeObject(obj);
             var dic = JsonConvert.DeserializeObject<IDictionary<string, string>>(jsonStr);
@@ -121,7 +122,8 @@ namespace System.Web.Mvc
 
             var objUrl = string.Join("/", list.ToArray());
 
-            return string.Format("{0}/r/{1}", serverUrl, objUrl).ToLower();
+            return string.Format("/{0}/{1}/r/{2}", controllerName, actionName, objUrl).ToLower();
+            //return string.Format("{0}/r/{1}", serverUrl, objUrl).ToLower();
         }
 
     }
