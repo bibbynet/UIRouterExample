@@ -95,11 +95,11 @@
             $locationProvider.html5Mode(true);
 
             //seq
-            $urlRouterProvider.otherwise("/pagination/r/tab1/0");
+            $urlRouterProvider.otherwise("/pagination/index/r/tab1/0");
 
             $stateProvider
                 .state('tab', {
-                    url: "/pagination/r/{tabName}/{pageIndex}",
+                    url: "/pagination/index/r/{tabName}/{pageIndex}",
                     views: {
                         "main": {
                             controller: "tabPaginationCtrl",
